@@ -42,5 +42,12 @@ public class UserServiceImpl implements UserService {
 		return dao.findAll();
 	}
 
-
+  @Override
+  public boolean hasBets(Long id) {
+    User user = findById(id);
+    if (user == null) {
+      return false;
+    }
+    return user.getBets().size() > 0;
+  }
 }

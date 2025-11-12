@@ -5,12 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.lunaltas.dicegame.domain.Bet;
 import com.lunaltas.dicegame.service.BetService;
 import com.lunaltas.dicegame.service.UserService;
@@ -41,22 +40,15 @@ public class BetsController {
   }
 
   @PostMapping("/create")
-  public String create( Bet bet) {
-    System.out.println("**********");
-    System.out.println("********** Passou pelo create - BetsController");
-    System.out.println("********** Bet: " + bet);
-    System.out.println("**********");
+  public String create( Bet bet, RedirectAttributes redirectAttributes) {
     betService.save(bet);
+    redirectAttributes.addFlashAttribute("success", "Bet salvo com sucesso");
     return "redirect:/bets/show/" + bet.getId();
   }
 
   @GetMapping("/show/{id}")
   public String show(@PathVariable Long id, ModelMap model) {
     model.addAttribute("bet", betService.findById(id));
-    System.out.println("**********");
-    System.out.println("********** Passou pelo show - ID: " + id + " BetsController");
-    System.out.println("********** Bet: " + betService.findById(id));
-    System.out.println("**********");
     return "/bets/show";
   }
 
@@ -64,27 +56,20 @@ public class BetsController {
   public String edit(@PathVariable Long id, ModelMap model) {
     model.addAttribute("bet", betService.findById(id));
     model.addAttribute("users", userService.findAll());
-    System.out.println("**********");
-    System.out.println("********** Passou pelo edit - ID: " + id + " BetsController");
-    System.out.println("**********");
     return "/bets/edit";
   }
 
   @PutMapping("/update/{id}")
-  public String update(@PathVariable Long id, Bet bet) {
+  public String update(@PathVariable Long id, Bet bet, RedirectAttributes redirectAttributes) {
     betService.update(bet);
-    System.out.println("**********");
-    System.out.println("********** Passou pelo update - ID: " + id + " BetsController");
-    System.out.println("**********");
+    redirectAttributes.addFlashAttribute("success", "Bet atualizado com sucesso");
     return "redirect:/bets/show/" + bet.getId();
   }
 
   @DeleteMapping("/delete/{id}")
-  public String delete(@PathVariable Long id) {
+  public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
     betService.delete(id);
-    System.out.println("**********");
-    System.out.println("********** Passou pelo delete - ID: " + id + " BetsController");
-    System.out.println("**********");
+    redirectAttributes.addFlashAttribute("success", "Bet deletado com sucesso");
     return "redirect:/bets/index";
   }
 }

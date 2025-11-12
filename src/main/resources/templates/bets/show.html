@@ -11,6 +11,7 @@
       <main>
       <div class="container py-4">
         <div th:replace="~{fragments/dashboard :: header}"></div>
+        <div th:replace="~{fragments/dashboard :: alert(${success}, ${error})}"></div>
         <div class="row">
           <div class="col-md-2">
             <div th:replace="~{fragments/dashboard :: menu-sidebar}"></div>

@@ -1,7 +1,10 @@
 package com.lunaltas.dicegame.domain;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @SuppressWarnings("serial")
@@ -51,5 +54,12 @@ public class User extends AbstractEntity<Long> {
 
   public void setRole(String role) {
     this.role = role;
+  }
+
+  @OneToMany(mappedBy = "user")
+  private List<Bet> bets;
+
+  public List<Bet> getBets() {
+    return bets;
   }
 }

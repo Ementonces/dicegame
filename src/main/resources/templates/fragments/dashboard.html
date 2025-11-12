@@ -70,6 +70,22 @@
     </footer>
   </div>
 
+  <div th:fragment="alert(${success}, ${error})">
+    <div th:if="${success} != null">
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong th:text="${success}"></strong> 
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+	
+    <div th:if="${error} != null">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong th:text="${error}"></strong> 
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
 
 </body>
 </html>
