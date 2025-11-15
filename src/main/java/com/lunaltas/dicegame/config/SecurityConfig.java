@@ -52,8 +52,15 @@ public class SecurityConfig {
 				.requestMatchers("/login").permitAll()
 				// páginas públicas
 				.requestMatchers("/").permitAll()
+
+        // páginas de administração
+				.requestMatchers("/users/**").hasRole("ADMIN")
+
 				// todas as outras requisições precisam de autenticação
 				.anyRequest().authenticated()
+			)
+			.exceptionHandling(handling -> handling
+				.accessDeniedPage("/access-denied")
 			)
 			.formLogin(form -> form
 				.loginPage("/login")
